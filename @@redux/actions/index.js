@@ -1,0 +1,10 @@
+const CONSTANTS = {
+  AUTH: {
+    LOGIN: '@@AUTH/LOGIN',
+    LOGIN_SUCCESS: '@@AUTH/LOGIN/SUCCESS',
+    LOGIN_FAILURE: '@@AUTH/LOGIN/FAILURE',
+    LOGOUT: '@@AUTH/LOGOUt'
+  }
+}
+
+export default CONSTANTS;
