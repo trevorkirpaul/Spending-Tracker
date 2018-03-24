@@ -1,44 +1,20 @@
-import { createStore } from 'redux';
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import R from 'ramda';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import auth from '../reducers/auth';
+import saga from '../sagas/rootSaga';
 
-import rootReducer from '../reducers';
-import enahncer from './enhancers';
+const sagaMW = createSagaMiddleware();
 
-const persistenceConfig = {
-  key: 'persist',
-  storage
-}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
   const store = createStore(
-    persistReducer(persistenceConfig, rootReducer, enahncer),
-    {},
-    enhancer
+    combineReducers({ auth }),
+    composeEnhancers(applyMiddleware(sagaMW))
   );
 
-  const persistor = persistStore(store);
-
-  if (__DEV__) {
-    console.log('ataching helpers (state, storage) to global');
-    global.state = store.getState();
-    global.storage = initial;
-		global.persistor = persistor;
-		global.storage.reset = () => Promise.all([
-			global.persistor.purge(),
-			global.persistor.persist()
-		]);
-		global.R = R;
-  }
-
-  if (module.hot) {
-		module.hot.accept(() => {
-			const nextRootReducer = require('@redux/reducers').default;
-			store.replaceReducer(nextRootReducer);
-		});
-  }
+  sagaMW.run(saga);
   
-  return { store, persistor }
+  return store;
 
 }

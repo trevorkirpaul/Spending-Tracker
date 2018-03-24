@@ -1,9 +1,13 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux';
 
+import configStore from './@@redux/store/configStore'
 import Home from './components/home/Home'
 import Dashboard from './components/dashboard/Dashboard'
 import CreateUser from './components/createUser/CreateUser'
+
+const store = configStore();
 
 const RootStack = StackNavigator({
   Home: {
@@ -19,6 +23,10 @@ const RootStack = StackNavigator({
 
 export default class App extends React.Component {
   render() {
-    return <RootStack />;
+    return (
+      <Provider store={store}>
+        <RootStack />  
+      </Provider>
+    );
   }
 }

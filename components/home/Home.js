@@ -1,5 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import { View, Text, Button, StyleSheet } from 'react-native';
+
+import { startLogin } from '../../@@redux/actions/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +23,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, startLogin }) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleWrap}>
@@ -35,8 +38,17 @@ const Home = ({ navigation }) => {
         title="Create User"
         onPress={() => navigation.navigate('CreateUser')}
       />
+
+      <Button
+        title="Log In"
+        onPress={() => startLogin()}
+      />
     </View>
   )
 }
 
-export default Home;
+const mapDispatchToProps = dispatch => ({
+  startLogin: () => dispatch(startLogin())
+})
+
+export default connect(null, mapDispatchToProps)(Home);
