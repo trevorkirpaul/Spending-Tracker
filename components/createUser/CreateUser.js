@@ -9,9 +9,9 @@ class CreateUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      salary: null,
+      email: '',
+      password: '',
+      confirm_password: null,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCreateUser = this.handleCreateUser.bind(this);
@@ -21,11 +21,12 @@ class CreateUser extends Component {
     return this.props.createUser({...this.state})
   }
   handleSubmit() {
-    const { firstName, lastName, salary } = this.state;
-    if (!firstName || !lastName || !salary) { return Alert.alert('Error', 'Please complete all fields') }
+    const { email, password, confirm_password } = this.state;
+    if (!email || !password || !confirm_password) { return Alert.alert('Error', 'Please complete all fields') }
+    if (password !== confirm_password) { return Alert.alert('Error', 'Passwords do not match') }
     Alert.alert(
       'Create New User?',
-      `First Name: ${firstName}\n Last Name: ${lastName}\n Salary: ${salary}`,
+      `Email: ${email}`,
       [
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'OK', onPress: () => this.handleCreateUser()}
@@ -41,26 +42,29 @@ class CreateUser extends Component {
         </View>
         <TextInput
           style={styles.input}
-          value={this.state.firstName}
-          onChangeText={(firstName) => this.setState({ firstName })}
-          placeholder="First Name"
+          value={this.state.email}
+          onChangeText={(email) => this.setState({ email })}
+          placeholder="Email"
           autoCorrect={false}
+          autoCapitalize='none'
         />
 
         <TextInput
           style={styles.input}
-          value={this.state.lastName}
-          onChangeText={(lastName) => this.setState({ lastName })}
-          placeholder="Last Name"
+          value={this.state.password}
+          onChangeText={(password) => this.setState({ password })}
+          placeholder="Password"
           autoCorrect={false}
+          autoCapitalize='none'
         />
 
         <TextInput
           style={styles.input}
-          value={this.state.salary}
-          onChangeText={(salary) => this.setState({ salary })}
-          placeholder="Salary"
+          value={this.state.confirm_password}
+          onChangeText={(confirm_password) => this.setState({ confirm_password })}
+          placeholder="Enter Password Again"
           autoCorrect={false}
+          autoCapitalize='none'
         />
         <Button
           title="Create User"
