@@ -41,7 +41,7 @@ const Home = ({ navigation, startLogin }) => {
 
       <Button
         title="Log In"
-        onPress={() => startLogin()}
+        onPress={() => navigation.navigate('Login')}
       />
     </View>
   )

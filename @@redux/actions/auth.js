@@ -2,8 +2,12 @@ import CONSTANTS from '../actions';
 
 const { AUTH } = CONSTANTS;
 
-export const startLogin = () => ({
+export const startLogin = user => ({
   type: AUTH.LOGIN,
   loading: true,
-  isLoggedIn: false
+  isLoggedIn: false,
+  token: null,
+  error: false,
+  auth: false,
+  user
 })

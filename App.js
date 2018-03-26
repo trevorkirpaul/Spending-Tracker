@@ -6,6 +6,7 @@ import configStore from './@@redux/store/configStore'
 import Home from './components/home/Home'
 import Dashboard from './components/dashboard/Dashboard'
 import CreateUser from './components/createUser/CreateUser'
+import Login from './components/logIn/LogInContainer';
 
 const store = configStore();
 
@@ -18,6 +19,9 @@ const RootStack = StackNavigator({
   },
   CreateUser: {
     screen: CreateUser,
+  },
+  Login: {
+    screen: Login
   }
 });
 
